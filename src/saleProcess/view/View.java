@@ -25,6 +25,13 @@ public class View {
 	public void runASaleSimulation(){
 		contr.initiateNewSale();
 		System.out.println("A sale has now begun");
+		contr.scanItem(123, 4);
+		System.out.println("item 123 has been scanned, cashier typed 4 " +
+				"(for 4 of item 123)");
+		contr.discountReq(1234567891);
+		System.out.println("customer made a discount request");
+		contr.pay(300);
+		System.out.println("customer is done and just payed 300:-");
 	}
 
 }

@@ -18,11 +18,13 @@ public class Sale {
 
 	private ItemDTO items[];
 
-	private Discount discount;
+	private Discount discountPr;
 
 	private Payment payment;
 
 	private Printer printer;
+
+	private int nrOfTotalItems=0;
 	/**
 	 * instantiates a new sale and saves the time of the sale.
 	 * A new instance of receipt will also be created for the purpose
@@ -35,16 +37,19 @@ public class Sale {
 		receipt=new Receipt();
 	}
 
-	public void addItem(ItemDTO item) {
+	public void addItem(ItemDTO item, int nrOfItem) {
+		nrOfTotalItems +=1;
+		items[nrOfTotalItems]=item;
+		receipt.updateReceipt(item);
+	}
+
+	public void discountReq(int customerID) {
+		discountPr= new Discount(this, customerID);
 
 	}
 
-	public void DiscountReq(int customerID) {
-
-	}
-
-	public double endSale(double amount) {
-		return 0;
+	public Payment endSale(double amount) {
+		return payment = new Payment(amount, this);
 	}
 
 }

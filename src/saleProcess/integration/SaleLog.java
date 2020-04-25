@@ -4,12 +4,13 @@ import saleProcess.model.Sale;
 
 public class SaleLog {
 
-	private  InventoryS  InventoryS;
+	private  InventoryS  inv;
 
-	private ExternalAccountingS externalAccountingS;
+	private ExternalAccountingS extAcc;
 
 	public void logSale(Sale sale) {
-
+		inv.updateInventory(sale);
+		extAcc.updateAccount(sale);
 	}
 
 	public  SaleLog() {

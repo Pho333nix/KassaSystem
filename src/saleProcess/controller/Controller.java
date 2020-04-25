@@ -1,6 +1,7 @@
 package saleProcess.controller;
 
 import saleProcess.integration.*;
+import saleProcess.model.Payment;
 import saleProcess.model.Sale;
 import saleProcess.model.Register;
 
@@ -23,6 +24,8 @@ public class Controller {
 	private Printer pr;
 	private ExternalAccountingS extAcc;
 	private Sale sale;
+	private ItemDTO itemDTO;
+	private Payment payment;
 
 
 	/**
@@ -49,14 +52,28 @@ public class Controller {
 	}
 
 	public String scanItem(int itemID, int nrOfItem) {
-		return null;
+		boolean exist= inv.verifyItem(itemID);
+		if(exist) {
+			itemDTO = inv.getIteminfo(itemID);
+			sale.addItem(itemDTO, nrOfItem);
+		}else{
+			return "There is no such item";
+		}
+		return "item added";
 	}
 
-	public void discountReq(int CustomerID) {
+	public void discountReq(int customerID) {
+		sale.discountReq(customerID);
 	}
 
 	public double pay(double amount) {
-		return 0;
+		payment= sale.endSale(amount);
+		reg.addPayment(payment);
+		return payment.change;
+	}
+
+	private void logTheSale(){
+		log.logSale(sale);
 	}
 
 }
