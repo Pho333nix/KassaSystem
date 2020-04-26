@@ -7,7 +7,7 @@ import saleProcess.controller.Controller;
  *
  * */
 public class View {
-
+	private String responseMsg;
 	private Controller contr;
 	/**
 	 * instantiates a view that will use the given controller to
@@ -23,11 +23,11 @@ public class View {
 	 * calling the various system operations in the controller.
 	 * */
 	public void runASaleSimulation(){
+
 		contr.initiateNewSale();
 		System.out.println("A sale has now begun");
-		contr.scanItem(123, 4);
-		System.out.println("item 123 has been scanned, cashier typed 4 " +
-				"(for 4 of item 123)");
+		responseMsg= contr.scanItem(11111, 4);
+		System.out.println(responseMsg);
 		contr.discountReq(1234567891);
 		System.out.println("customer made a discount request");
 		contr.pay(300);

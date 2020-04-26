@@ -52,14 +52,13 @@ public class Controller {
 	}
 
 	public String scanItem(int itemID, int nrOfItem) {
-		boolean exist= inv.verifyItem(itemID);
-		if(exist) {
-			itemDTO = inv.getIteminfo(itemID);
-			sale.addItem(itemDTO, nrOfItem);
-		}else{
-			return "There is no such item";
+			itemDTO = inv.getItemInfo(itemID);
+			if(itemDTO != null) {
+				sale.addItem(itemDTO, nrOfItem);
+				return "item"  + itemDTO.getItemName().toString() + " " + nrOfItem +" is added";
+			}else{
+				return "something went wrong, there is no such item in our database.";
 		}
-		return "item added";
 	}
 
 	public void discountReq(int customerID) {

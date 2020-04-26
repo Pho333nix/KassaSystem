@@ -26,4 +26,8 @@ public class ItemDTO {
 		this.itemID=itemID;
 		this.itemName=itemName;
 	}
+
+	public String getItemName() {
+		return itemName;
+	}
 }

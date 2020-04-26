@@ -1,5 +1,8 @@
 package saleProcess.model;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import saleProcess.integration.ItemDTO;
 import saleProcess.integration.Printer;
 /**
@@ -16,7 +19,7 @@ public class Sale {
 
 	private String storeAdress;
 
-	private ItemDTO items[];
+	private List<ItemAndQuantity> items=new ArrayList<>();
 
 	private Discount discountPr;
 
@@ -34,13 +37,12 @@ public class Sale {
 		//write test of sale later on when saleTime will be used again
 		//in a meaningful way (e.g: when it will be added to receipt)
 		saleTime=LocalTime.now();
-		receipt=new Receipt();
+		receipt=new Receipt(items);
 	}
 
 	public void addItem(ItemDTO item, int nrOfItem) {
 		nrOfTotalItems +=1;
-		items[nrOfTotalItems]=item;
-		receipt.updateReceipt(item);
+		items.add(new ItemAndQuantity(item, nrOfItem));
 	}
 
 	public void discountReq(int customerID) {
