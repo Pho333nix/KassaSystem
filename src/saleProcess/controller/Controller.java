@@ -40,6 +40,7 @@ public class Controller {
 		this.sysC=sysC;
 		this.inv= sysC.getInventory();
 		this.extAcc=sysC.getAccounting();
+		this.log=sysC.getSaleLog();
 		this.discountHandler=sysC.getDiscountHdlr();
 		pr = new Printer();
 		reg = new Register();
@@ -52,7 +53,7 @@ public class Controller {
 	 *
 	 */
 	public void initiateNewSale(){
-		sale= new Sale(discountHandler);
+		sale= new Sale(discountHandler, pr);
 	}
 
 	/**
@@ -102,13 +103,28 @@ public class Controller {
 		return sale.discountRequest(customerID);
 	}
 
+	/**
+	 * This is the last system operation.
+	 * when a payment is made the payed amount
+	 * is sent to sale for the proper calculatons
+	 * and changes
+	 * @param amount
+	 * @return change is returned to the view
+	 */
 	public double pay(double amount) {
 		payment= sale.endSale(amount);
+
 		reg.addPayment(payment);
-		return payment.change;
+		logTheSale();
+		return payment.getChange();
 	}
 
+	/**
+	 * This method intitiates the update of the register,
+	 * salelog, external accounitng, and inventory systems.
+	 */
 	private void logTheSale(){
+		reg.addPayment(payment);
 		log.logSale(sale);
 	}
 

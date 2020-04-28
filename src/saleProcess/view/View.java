@@ -24,7 +24,6 @@ public class View {
 	 * */
 	public void runASaleSimulation(){
 		double runningTotal;
-		double rateAfterDiscount;
 		contr.initiateNewSale();
 		System.out.println("A sale has now begun");
 		responseMsg= contr.scanItem(11111, 4);

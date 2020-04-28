@@ -12,7 +12,7 @@ public class SystemCreator {
 	public  SystemCreator() {
 		inv = new InventoryS();
 		extAcc = new ExternalAccountingS();
-		log = new SaleLog();
+		log = new SaleLog(extAcc, inv);
 		discountHdlr = new DiscountHandler();
 	}
 

@@ -14,6 +14,7 @@ public class InventoryS{
 
 	private ItemDTO itemDTO;
 	private HashMap<Integer, Item> itemDB= new HashMap<Integer, Item>();
+	private HashMap<ItemDTO, Integer> mapOfBoughtItems = new HashMap<>();
 
 	/**
 	 * The Constructor should establish connection to a database somwhere, we
@@ -61,19 +62,33 @@ public class InventoryS{
 		itemDTO= new ItemDTO(item.getVAT(), item.getItemName(), item.getItemDescription(), item.getPrice(),
 				item.getItemID());
 	}
-	public void updateInventory(Sale sale) {
 
+	public void updateInventory(HashMap mapOfBoughtItems) {
+
+		this.mapOfBoughtItems=mapOfBoughtItems;
+		changeDB();
 	}
 
+	private void changeDB(){
+		int itemIdOfCurrentItem;
+		mapOfBoughtItems.forEach((itemDTO, quantity) ->
+				changeItemToRightQuantity(itemDB.get(itemDTO.getItemID()), quantity));
+
+	}
+	private void changeItemToRightQuantity(Item item, int quantityToReduceWith){
+		item.setNewQuantityINStock(item.getQuantityInStock() - quantityToReduceWith);
+	}
+
+
 	private void fictionalDB(){
-		Item apple = new Item(12, "apple", "grown in New Zeeland",
-			7, 11111);
-		Item salmon = new Item(25, "salmon", "Norwegian wild salmon",
-				125, 22222);
-		Item  stapler= new Item(15, "stapler", "The best stapler there is",
-				56, 33333);
-		Item potato = new Item(12, "potatoe", "from local farms near you",
-				9, 44444);
+		Item apple = new Item(1.12, "apple", "grown in New Zeeland",
+			7, 11111, 200);
+		Item salmon = new Item(1.25, "salmon", "Norwegian wild salmon",
+				125, 22222,200);
+		Item  stapler= new Item(1.15, "stapler", "The best stapler there is",
+				56, 33333, 200);
+		Item potato = new Item(1.12, "potatoe", "from local farms near you",
+				9, 44444, 200);
 		itemDB.put(new Integer(apple.getItemID()), apple);
 		itemDB.put(new Integer(salmon.getItemID()), salmon);
 		itemDB.put(new Integer(stapler.getItemID()), stapler);

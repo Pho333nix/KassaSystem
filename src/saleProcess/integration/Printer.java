@@ -4,8 +4,8 @@ import saleProcess.model.Receipt;
 
 public class Printer {
 
-	void print(Receipt receipt) {
-
+	public void printReceipt(Receipt receipt) {
+		receipt.toString();
 	}
 
 	public Printer Printer() {

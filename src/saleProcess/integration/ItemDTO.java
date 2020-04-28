@@ -2,7 +2,7 @@ package saleProcess.integration;
 
 public class ItemDTO {
 
-	private final int VAT;
+	private final double VAT;
 
 	private final String itemDescription;
 
@@ -18,7 +18,7 @@ public class ItemDTO {
 	 * of our system (sale, receipt, printer etc). This will represent a single item.
 	 *
 	 */
-	public ItemDTO (int VAT,String itemName, String itemDecription, double price, int itemID)
+	public ItemDTO (double VAT,String itemName, String itemDecription, double price, int itemID)
 	{
 		this.VAT=VAT;
 		this.itemDescription=itemDecription;
@@ -33,5 +33,13 @@ public class ItemDTO {
 
 	public double getPrice() {
 		return price;
+	}
+
+	public int getItemID() {
+		return itemID;
+	}
+
+	public double getVAT() {
+		return VAT;
 	}
 }

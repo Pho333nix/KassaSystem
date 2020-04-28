@@ -39,12 +39,12 @@ public class Sale {
 	 * A new instance of receipt will also be created for the purpose
 	 * of printing proof of sale to provide to the customer
 	 * */
-	public Sale(DiscountHandler discHdlr) {
+	public Sale(DiscountHandler discHdlr, Printer printer) {
 		//write test of sale later on when saleTime will be used again
 		//in a meaningful way (e.g: when it will be added to receipt)
 		saleTime=LocalTime.now();
 		discountHandler=discHdlr;
-		receipt=new Receipt(itemsInSale);
+		this.printer=printer;
 	}
 	/**
 	 * This method will add a DTO of the scanned Item
@@ -82,7 +82,12 @@ public class Sale {
 	 * @param nrOfItem The quantity of that specific item
 	 */
 	private void updateRunningTotal(ItemDTO item, int nrOfItem){
-		runningTotal += item.getPrice() * nrOfItem;
+		System.out.println(runningTotal);
+		System.out.println(item.getPrice());
+		System.out.println(nrOfItem);
+		runningTotal += item.getPrice() * (nrOfItem * item.getVAT());
+		System.out.println("running" + runningTotal + item.getPrice()
+		+ nrOfItem + item.getVAT());
 	}
 	/**
 	 * This method checks if item is already in sale (it was scanned
@@ -93,7 +98,6 @@ public class Sale {
 	 * 			hashmap or not.
 	 * */
 	private boolean itemIsAlreadyInSale(ItemDTO item){
-
 		return itemsInSale.containsKey(item);
 	}
 
@@ -138,9 +142,25 @@ public class Sale {
 		return runningTotal;
 	}
 
+	/**
+	 * This method instantiates a new payment object and retu
+	 * @param amount
+	 * @return
+	 */
 	public Payment endSale(double amount) {
 
-		return payment = new Payment(amount, this);
+		payment = new Payment(amount, this);
+		receipt=new Receipt(itemsInSale, saleTime, payment, runningTotal);
+		printer.printReceipt(receipt);
+		return payment;
 	}
 
+	public LocalTime getSaleTime() {
+		return saleTime;
+	}
+
+	public HashMap<ItemDTO, Integer> getItemsInSale() {
+		return itemsInSale;
+//	itemsInSale.forEach(itemDto, quantity);
+	}
 }
