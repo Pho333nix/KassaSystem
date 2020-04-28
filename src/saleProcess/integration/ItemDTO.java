@@ -30,4 +30,8 @@ public class ItemDTO {
 	public String getItemName() {
 		return itemName;
 	}
+
+	public double getPrice() {
+		return price;
+	}
 }

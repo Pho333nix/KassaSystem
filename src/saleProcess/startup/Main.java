@@ -13,8 +13,11 @@ public class Main {
 	public static void main(String[] args) {
 	SystemCreator sysC = new SystemCreator();
 	Controller contr = new Controller(sysC);
+		System.out.println(contr.toString());
 	View view = new View(contr);
 	view.runASaleSimulation();
+
+	 
 	}
 
 }

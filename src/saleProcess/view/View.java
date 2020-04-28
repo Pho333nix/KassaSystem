@@ -23,13 +23,16 @@ public class View {
 	 * calling the various system operations in the controller.
 	 * */
 	public void runASaleSimulation(){
-
+		double runningTotal;
+		double rateAfterDiscount;
 		contr.initiateNewSale();
 		System.out.println("A sale has now begun");
 		responseMsg= contr.scanItem(11111, 4);
 		System.out.println(responseMsg);
-		contr.discountReq(1234567891);
-		System.out.println("customer made a discount request");
+		runningTotal= contr.endSaleSession();
+		System.out.println("The running total is: " + runningTotal);
+		responseMsg= contr.discountRequest(1234567891);
+		System.out.println("customer made a discount request " + responseMsg );
 		contr.pay(300);
 		System.out.println("customer is done and just payed 300:-");
 	}

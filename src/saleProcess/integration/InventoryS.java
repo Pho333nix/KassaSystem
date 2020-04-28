@@ -25,10 +25,24 @@ public class InventoryS{
 		fictionalDB();
 	}
 
+	/**
+	 * This method confirms the existence of an item in our database
+	 * @param itemID an id that uniquely identifies item in our database.
+	 * @return boolean true or false, item exists or not.
+	 */
 	private boolean itemExists(int itemID){
 		return itemDB.containsKey(itemID);
 	}
-
+	/**
+	 * This method is called from the controller
+	 * it will check whether an item exists in our
+	 * database or not with the use of a private method itemExists.
+	 * If the item Exists a DTO containing it's information will
+	 * be created and returned.
+	 * @param itemID an id that uniquely identifies item in our database.
+	 * @return will retun either a DTO of the item or null if it does not
+	 * exist
+	 * */
 	public ItemDTO getItemInfo(int itemID) {
 		if(itemExists(itemID)){
 			createItemDTO(itemID);
@@ -37,6 +51,11 @@ public class InventoryS{
 			return null;
 		}
 	}
+
+	/**
+	 * creates an ItemDTO of an item from the database
+	 * @param itemID an id that uniquely identifies item in our database.
+	 */
 	private void createItemDTO(int itemID){
 		Item item = itemDB.get(itemID);
 		itemDTO= new ItemDTO(item.getVAT(), item.getItemName(), item.getItemDescription(), item.getPrice(),

@@ -7,15 +7,20 @@ public class SystemCreator {
 	private ExternalAccountingS extAcc;
 
 	private SaleLog log;
+	private DiscountHandler discountHdlr;
 
 	public  SystemCreator() {
 		inv = new InventoryS();
 		extAcc = new ExternalAccountingS();
 		log = new SaleLog();
+		discountHdlr = new DiscountHandler();
 	}
 
 	public InventoryS getInventory() {
 		return inv;
+	}
+	public DiscountHandler getDiscountHdlr(){
+		return discountHdlr;
 	}
 
 	public ExternalAccountingS getAccounting() {

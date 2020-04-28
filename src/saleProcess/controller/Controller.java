@@ -23,6 +23,7 @@ public class Controller {
 
 	private Printer pr;
 	private ExternalAccountingS extAcc;
+	private DiscountHandler discountHandler;
 	private Sale sale;
 	private ItemDTO itemDTO;
 	private Payment payment;
@@ -39,6 +40,7 @@ public class Controller {
 		this.sysC=sysC;
 		this.inv= sysC.getInventory();
 		this.extAcc=sysC.getAccounting();
+		this.discountHandler=sysC.getDiscountHdlr();
 		pr = new Printer();
 		reg = new Register();
 	}
@@ -46,23 +48,58 @@ public class Controller {
 	 * This is what initiates a new sale. whenever a new customer
 	 * wants to buy something, this is instantiated and the sale can start.
 	 * by definition it proceeds any action that can be taken in the sale process
-	 * */
+	 *
+	 *
+	 */
 	public void initiateNewSale(){
-		sale= new Sale();
+		sale= new Sale(discountHandler);
 	}
 
+	/**
+	 *This method is called when the cashier scans an item. This method
+	 * will first check the inventory to see if such an item even exists
+	 * in the database. If that is the case then an ItemDTO is returned
+	 * containing  information about that item. That DTO is what we
+	 * will add to the sale.
+	 * @param itemID is what uniquely identifies an item, that will be used to get
+	 * the information needed to create the DTO
+	 * @param nrOfItem is the specified quantity of that specific item. it is set
+	 * to one by default but the cashier could enter another value before scanning the next item
+	 *
+	 * @return returnMsg is the message returned to the view, what the cashier sees on
+	 * the monitor. it will confirm wether the item was added or give an error message
+	 */
 	public String scanItem(int itemID, int nrOfItem) {
+		String returnMsg;
 			itemDTO = inv.getItemInfo(itemID);
 			if(itemDTO != null) {
-				sale.addItem(itemDTO, nrOfItem);
-				return "item"  + itemDTO.getItemName().toString() + " " + nrOfItem +" is added";
+				sale.addItemToSale(itemDTO, nrOfItem);
+				 returnMsg ="item "  + itemDTO.getItemName() + " " + nrOfItem +" is added";
 			}else{
-				return "something went wrong, there is no such item in our database.";
+				returnMsg="something went wrong, there is no such item in our database.";
 		}
+			return returnMsg;
 	}
 
-	public void discountReq(int customerID) {
-		sale.discountReq(customerID);
+	/**
+	 * This method marks the end of the "sale session".
+	 * No more items will be scanned (although they can if
+	 * cusotmer changes their mind). This is done right before
+	 * the discount request or the payment itself (which will end the sale)
+	 * @return the runningtotal, the totalprice so far. without the discount
+	 */
+	public double endSaleSession(){
+		return sale.getRunningTotal();
+	}
+
+	/**
+	 * This method is called when a discount request is made, it will either
+	 * update
+	 * @param customerID
+	 * @return
+	 */
+	public String discountRequest(int customerID) {
+		return sale.discountRequest(customerID);
 	}
 
 	public double pay(double amount) {
