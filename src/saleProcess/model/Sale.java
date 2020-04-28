@@ -82,12 +82,9 @@ public class Sale {
 	 * @param nrOfItem The quantity of that specific item
 	 */
 	private void updateRunningTotal(ItemDTO item, int nrOfItem){
-		System.out.println(runningTotal);
-		System.out.println(item.getPrice());
-		System.out.println(nrOfItem);
+
 		runningTotal += item.getPrice() * (nrOfItem * item.getVAT());
-		System.out.println("running" + runningTotal + item.getPrice()
-		+ nrOfItem + item.getVAT());
+
 	}
 	/**
 	 * This method checks if item is already in sale (it was scanned
@@ -160,7 +157,7 @@ public class Sale {
 	}
 
 	public HashMap<ItemDTO, Integer> getItemsInSale() {
+
 		return itemsInSale;
-//	itemsInSale.forEach(itemDto, quantity);
 	}
 }
