@@ -34,7 +34,7 @@ public class View {
 		System.out.println("The running total is: " + runningTotal);
 		responseMsg= contr.discountRequest(1234567891);
 		System.out.println("customer made a discount request " + responseMsg );
-		double change=contr.pay(300);
+		double change=contr.payAndLog(300);
 		System.out.println("customer is done and just payed 300:- and your change is: "+change);
 	}
 

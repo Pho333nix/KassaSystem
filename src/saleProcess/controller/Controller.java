@@ -113,7 +113,7 @@ public class Controller {
 	 * @param amount
 	 * @return change is returned to the view
 	 */
-	public double pay(double amount) {
+	public double payAndLog(double amount) {
 		payment= sale.endSale(amount);
 
 		reg.addPayment(payment);
@@ -127,7 +127,7 @@ public class Controller {
 	 */
 	private void logTheSale(){
 		reg.addPayment(payment);
-		log.logSale(sale);
+		log.logSale(sale, sale.getItemsInSale());
 	}
 
 }

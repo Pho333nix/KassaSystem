@@ -14,7 +14,7 @@ public class ExternalAccountingS {
 
 	public void updateAccount(Sale sale) {
 		saleArrayList.add(sale);
-		//System.out.println(s);
+		System.out.println(sale.toString());
 	}
 
 }

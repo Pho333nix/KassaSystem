@@ -34,6 +34,7 @@ public class InventoryS{
 	private boolean itemExists(int itemID){
 		return itemDB.containsKey(itemID);
 	}
+
 	/**
 	 * This method is called from the controller
 	 * it will check whether an item exists in our
@@ -76,13 +77,16 @@ public class InventoryS{
 	}
 
 	private void changeDB(){
-		int itemIdOfCurrentItem;
 		mapOfBoughtItems.forEach((itemDTO, quantity) ->
-				changeItemToRightQuantity(itemDB.get(itemDTO.getItemID()), quantity));
+				updateItemQuantityInStock(getCurrentItemQuantityInDB(itemDTO), quantity));
 
 	}
-	private void changeItemToRightQuantity(Item item, int quantityToReduceWith){
+	private Item getCurrentItemQuantityInDB(ItemDTO itemDTO){
+		return itemDB.get(itemDTO.getItemID());
+	}
+	private void updateItemQuantityInStock(Item item, int quantityToReduceWith){
 		item.setNewQuantityINStock(item.getQuantityInStock() - quantityToReduceWith);
+		System.out.println("stock reduced with: " + quantityToReduceWith);
 	}
 
 

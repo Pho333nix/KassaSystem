@@ -28,9 +28,9 @@ public class SaleLog {
 	 * saleTime
 	 * @param sale the specific sale instance in question.
 	 */
-	public void logSale(Sale sale) {
+	public void logSale(Sale sale, HashMap itemsInSaleCart) {
 		saleArrayList.add(sale);
-		inv.updateInventory(sale.getItemsInSale());
+		inv.updateInventory(itemsInSaleCart);
 		extAcc.updateAccount(sale);
 	}
 
