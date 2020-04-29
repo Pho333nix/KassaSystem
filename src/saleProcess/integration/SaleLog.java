@@ -32,6 +32,7 @@ public class SaleLog {
 		saleArrayList.add(sale);
 		inv.updateInventory(itemsInSaleCart);
 		extAcc.updateAccount(sale);
+		System.out.println(sale.toString());
 	}
 
 }
