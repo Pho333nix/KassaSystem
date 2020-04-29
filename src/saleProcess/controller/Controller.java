@@ -54,6 +54,7 @@ public class Controller {
 	 */
 	public void initiateNewSale(){
 		sale= new Sale(discountHandler, pr);
+		System.out.println(sale.toString());
 	}
 
 	/**

@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import saleProcess.integration.SystemCreator;
 import saleProcess.model.Payment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
@@ -22,12 +25,25 @@ class ControllerTest {
         contr= null;
     }
 
-  /*  @Test
+    @Test
     void initiateNewSale() {
+        ByteArrayOutputStream printoutBuffer = new ByteArrayOutputStream();
+        PrintStream inMemSysOut = new PrintStream(printoutBuffer);
+        PrintStream originalPS=System.out;
+        System.setOut(inMemSysOut);
+        contr.initiateNewSale();
+
+        String printout = printoutBuffer.toString();
+        String expectedString="sale";
+        assertTrue(printout.contains(expectedString), "no new sale? :/");
+
+        printoutBuffer =null;
+        System.setOut(originalPS);
+
 
     }
 
-   */
+
 
     @Test
     void scanItem() {
