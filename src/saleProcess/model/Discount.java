@@ -1,7 +1,7 @@
 package saleProcess.model;
 
 import saleProcess.integration.DiscountHandler;
-import saleProcess.util.DiscountRate;
+import saleProcess.integration.DiscountRate;
 
 /**
  * This class is instantiated when a new discount is made.

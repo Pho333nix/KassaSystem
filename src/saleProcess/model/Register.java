@@ -16,5 +16,7 @@ public class Register {
 		balance-=payment.getChange();
 	}
 
-
+	public double getBalance() {
+		return balance;
+	}
 }

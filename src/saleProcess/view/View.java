@@ -28,12 +28,14 @@ public class View {
 		System.out.println("A sale has now begun");
 		responseMsg= contr.scanItem(11111, 4);
 		System.out.println(responseMsg);
+		responseMsg= contr.scanItem(11111, 1);
+		System.out.println(responseMsg);
 		runningTotal= contr.endSaleSession();
 		System.out.println("The running total is: " + runningTotal);
 		responseMsg= contr.discountRequest(1234567891);
 		System.out.println("customer made a discount request " + responseMsg );
-		contr.pay(300);
-		System.out.println("customer is done and just payed 300:-");
+		double change=contr.pay(300);
+		System.out.println("customer is done and just payed 300:- and your change is: "+change);
 	}
 
 }

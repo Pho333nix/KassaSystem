@@ -6,15 +6,20 @@ private double change;
 private Sale sale;
 private double totalPrice;
 
-	public  Payment(double amount, Sale sale) {
+	public Payment(double amount, Sale sale) {
 		this.payedAmount=amount;
 		this.sale=sale;
-		calculateTot();
+		this.totalPrice=sale.getRunningTotal();
+		calculateChange();
 	}
 
-	void calculateTot() {
-		this.totalPrice=sale.getRunningTotal();
-		this.change= payedAmount - totalPrice;
+	private void calculateChange(){
+		 if(payedAmount > totalPrice){
+
+			this.change= payedAmount - totalPrice;
+		}else{
+			this.change=0;
+		}
 
 	}
 

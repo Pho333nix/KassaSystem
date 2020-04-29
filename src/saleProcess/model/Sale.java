@@ -1,13 +1,11 @@
 package saleProcess.model;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import saleProcess.integration.DiscountHandler;
 import saleProcess.integration.ItemDTO;
 import saleProcess.integration.Printer;
-import saleProcess.util.DiscountRate;
+import saleProcess.integration.DiscountRate;
 /**
  * An instance of this class represents a single sale, by a single customer,
  * paid with one payment at a specific moment in time.
@@ -117,26 +115,26 @@ public class Sale {
 	 */
 	public String discountRequest (int customerID) {
 		initiateDiscount(customerID);
-		return  runningTotalAfterDiscount(discount.theDiscountRateAsAPrimitiveValue);
+		return  messageAfterDiscount(discount.theDiscountRateAsAPrimitiveValue);
 	}
 
 	private void initiateDiscount(int customerID){
 		discount = new Discount(this, customerID,discountHandler);
 	}
 
-	private String runningTotalAfterDiscount(double rate){
+	private String messageAfterDiscount(double rate){
 		if(rate == 1.0){
 			return "You were not eligable for a discount";
 		}else {
-			runningTotal -= runningTotal * rate;
+			runningTotal =  getRunningTotal()-(getRunningTotal()* rate);
 			return "You were eligable for a discount rate of: " + rate
-					+ "your new total is now: " + runningTotal;
+					+ " your new total is now: " + runningTotal;
 		}
 
 	}
 
 	public double getRunningTotal(){
-		return runningTotal;
+		return Math.round(runningTotal);
 	}
 
 	/**

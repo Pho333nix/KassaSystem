@@ -75,7 +75,9 @@ public class Controller {
 			itemDTO = inv.getItemInfo(itemID);
 			if(itemDTO != null) {
 				sale.addItemToSale(itemDTO, nrOfItem);
-				 returnMsg ="item "  + itemDTO.getItemName() + " " + nrOfItem +" is added";
+				 returnMsg ="item "  + itemDTO.getItemName() + " " + nrOfItem + " x " +
+						    " price excluding VAT is: " + itemDTO.getPrice()+ " is added"
+				 			+ "runningtotal including VAT is now: " + sale.getRunningTotal();
 			}else{
 				returnMsg="something went wrong, there is no such item in our database.";
 		}
@@ -106,7 +108,7 @@ public class Controller {
 	/**
 	 * This is the last system operation.
 	 * when a payment is made the payed amount
-	 * is sent to sale for the proper calculatons
+	 * is sent to sale for the proper calculations
 	 * and changes
 	 * @param amount
 	 * @return change is returned to the view

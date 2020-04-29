@@ -8,8 +8,5 @@ public class Printer {
 		receipt.toString();
 	}
 
-	public Printer Printer() {
-		return null;
-	}
 
 }

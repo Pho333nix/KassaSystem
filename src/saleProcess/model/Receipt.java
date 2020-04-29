@@ -14,27 +14,32 @@ public class Receipt {
 	private LocalTime timeOfSale;
 	private Payment payment;
 	private StringBuilder sr = new StringBuilder();
-	Receipt(HashMap items, LocalTime timeOfSale, Payment payment, double price){
+	public Receipt(HashMap items, LocalTime timeOfSale, Payment payment, double price){
 		this.itemsInSale= items;
-		this.timeOfSale=timeOfSale;
+		this.timeOfSale=LocalTime.of(timeOfSale.getHour(), timeOfSale.getMinute(), timeOfSale.getSecond());
 		this.payment=payment;
 		receiptText(price);
 	}
 
 	private void receiptText(double price){
-		sr.append(" 		FoodNStuff		");
-		sr.append(" address: someplace		");
-		sr.append(" time:   "+timeOfSale.toString());
-		sr.append("---------Receipt----------");
+		sr.append(" 		FoodNStuff		\n");
+		sr.append(" address: someplace		\n");
+		sr.append(" time:   "+timeOfSale.toString() +"\n");
+		sr.append("---------Receipt----------"+"\n");
 		sr.append("\n");
+		sr.append(" Item name   price	VAT rate \n");
 		itemsInSale.forEach((itemDTO, integer) -> {
-			sr.append(" " +itemDTO.getItemName() + "\t" + itemDTO.getPrice() + "x" + integer);
-			sr.append("\n");
+			String Name=" "+itemDTO.getItemName();
+			String priceWithQuantity=" "+itemDTO.getPrice() + " x " + integer;
+			String vat=" "+itemDTO.getVAT();
+			String line= String.format("%.15s %5s %5s \n", Name,priceWithQuantity, vat);
+			sr.append(line);
 		});
-		sr.append("payed amount:\t" + payment.getPayedAmount());
-		sr.append(" TotalPrice:\t" + payment.getTotalPrice() );
-		sr.append(" change:\t" + payment.getChange());
-		sr.append("---------------------------");
+		sr.append("---------------------------"+"\n");
+		sr.append(" payed amount:\t" + payment.getPayedAmount()+"\n");
+		sr.append(" TotalPrice:\t" + payment.getTotalPrice() +"\n");
+		sr.append(" change:\t" + payment.getChange()+"\n");
+		sr.append("---------------------------"+"\n");
 
 	}
 

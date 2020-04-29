@@ -6,14 +6,15 @@ import java.util.ArrayList;
 
 public class ExternalAccountingS {
 
-	ArrayList<Sale> saleArrayList = new ArrayList<>();
+	private ArrayList<Sale> saleArrayList = new ArrayList<>();
 
 	public  ExternalAccountingS() {
 
 	}
 
-	void updateAccount(Sale sale) {
+	public void updateAccount(Sale sale) {
 		saleArrayList.add(sale);
+		//System.out.println(s);
 	}
 
 }

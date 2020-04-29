@@ -63,6 +63,12 @@ public class InventoryS{
 				item.getItemID());
 	}
 
+	/**
+	 * This method receives a hasmap of sold items and their quantites.
+	 * That information is going to be used here to decrase the
+	 * quantity of each one of those items in stock.
+	 * @param mapOfBoughtItems
+	 */
 	public void updateInventory(HashMap mapOfBoughtItems) {
 
 		this.mapOfBoughtItems=mapOfBoughtItems;
@@ -81,18 +87,18 @@ public class InventoryS{
 
 
 	private void fictionalDB(){
-		Item apple = new Item(1.12, "apple", "grown in New Zeeland",
+		Item apple = new Item(1.12, "apple", "grown in New Zealand",
 			7, 11111, 200);
 		Item salmon = new Item(1.25, "salmon", "Norwegian wild salmon",
 				125, 22222,200);
 		Item  stapler= new Item(1.15, "stapler", "The best stapler there is",
 				56, 33333, 200);
-		Item potato = new Item(1.12, "potatoe", "from local farms near you",
+		Item potato = new Item(1.12, "potato", "from local farms near you",
 				9, 44444, 200);
-		itemDB.put(new Integer(apple.getItemID()), apple);
-		itemDB.put(new Integer(salmon.getItemID()), salmon);
-		itemDB.put(new Integer(stapler.getItemID()), stapler);
-		itemDB.put(new Integer(potato.getItemID()), potato);
+		itemDB.put(apple.getItemID(), apple);
+		itemDB.put(salmon.getItemID(), salmon);
+		itemDB.put(stapler.getItemID(), stapler);
+		itemDB.put(potato.getItemID(), potato);
 	}
 
 
