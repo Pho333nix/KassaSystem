@@ -34,7 +34,7 @@ class ControllerTest {
         contr.initiateNewSale();
 
         String printout = printoutBuffer.toString();
-        String expectedString="sale";
+        String expectedString="init sale";
         assertTrue(printout.contains(expectedString), "no new sale? :/");
 
         printoutBuffer =null;
