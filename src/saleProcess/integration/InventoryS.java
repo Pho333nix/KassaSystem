@@ -1,6 +1,5 @@
 package saleProcess.integration;
 
-import saleProcess.model.Sale;
 
 import java.util.HashMap;
 
@@ -15,6 +14,7 @@ public class InventoryS{
 	private ItemDTO itemDTO;
 	private HashMap<Integer, Item> itemDB= new HashMap<Integer, Item>();
 	private HashMap<ItemDTO, Integer> mapOfBoughtItems = new HashMap<>();
+	private final int dbCrasher= 10;
 
 	/**
 	 * The Constructor should establish connection to a database somwhere, we
@@ -45,12 +45,17 @@ public class InventoryS{
 	 * @return will retun either a DTO of the item or null if it does not
 	 * exist
 	 * */
-	public ItemDTO getItemInfo(int itemID) {
-		if(itemExists(itemID)){
+
+	public ItemDTO getItemInfo(int itemID) throws ItemNotFoundException, ConnectionToDBFailedException {
+		if(itemID==dbCrasher){
+			throw new ConnectionToDBFailedException("The system failed in it's attempt to " +
+					"reach the inventory database");
+		} else
+			if(itemExists(itemID)){
 			createItemDTO(itemID);
 			return itemDTO;
 		}else {
-			return null;
+			throw new ItemNotFoundException("item: "+itemID+" was not found in database");
 		}
 	}
 

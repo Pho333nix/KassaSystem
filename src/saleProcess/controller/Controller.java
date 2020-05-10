@@ -1,5 +1,6 @@
 package saleProcess.controller;
 
+import saleProcess.controller.out.OperationFailedException;
 import saleProcess.integration.*;
 import saleProcess.model.Payment;
 import saleProcess.model.Sale;
@@ -71,18 +72,10 @@ public class Controller {
 	 * @return returnMsg is the message returned to the view, what the cashier sees on
 	 * the monitor. it will confirm wether the item was added or give an error message
 	 */
-	public String scanItem(int itemID, int nrOfItem) {
-		String returnMsg;
+	public ItemDTO scanItem(int itemID, int nrOfItem) throws ItemNotFoundException, ConnectionToDBFailedException {
 			itemDTO = inv.getItemInfo(itemID);
-			if(itemDTO != null) {
 				sale.addItemToSale(itemDTO, nrOfItem);
-				 returnMsg ="item "  + itemDTO.getItemName() + " " + nrOfItem + " x " +
-						    " price excluding VAT is: " + itemDTO.getPrice()+ " is added"
-				 			+ "runningtotal including VAT is now: " + sale.getRunningTotal();
-			}else{
-				returnMsg="something went wrong, there is no such item in our database.";
-		}
-			return returnMsg;
+			return itemDTO;
 	}
 
 	/**

@@ -38,11 +38,40 @@ class InventorySTest {
 
     }
     @Test
-    void getItemInfo() {
+    void getExistingItemInfoTest() throws ItemNotFoundException, ConnectionToDBFailedException {
         InventoryS inv= new InventoryS();
         int item1=11111;
         ItemDTO itemDTO = inv.getItemInfo(item1);
         assertTrue(item1==itemDTO.getItemID());
+    }
+
+    @Test
+    void getNonExistingItemInfoTest(){
+        InventoryS inv= new InventoryS();
+        int wronngItem1=1;
+        ItemDTO itemDTO;
+        try {
+             itemDTO = inv.getItemInfo(wronngItem1);
+            fail("amazing! an item that was not in the database was found, test failed");
+        }catch(ItemNotFoundException ne){
+
+            assertTrue(ne.getMessage().contains(wronngItem1+" was not found"));
+        }
+
+    }
+    @Test
+    void getItemDBIsDownTest() throws ItemNotFoundException{
+        InventoryS inv= new InventoryS();
+        int databaseCrasher=10;
+        ItemDTO itemDTO;
+        try {
+            itemDTO = inv.getItemInfo(databaseCrasher);
+            fail("found an item even though we could not reach db to fetch it,  test failed");
+        }catch(ConnectionToDBFailedException ne){
+
+            assertTrue(ne.getMessage().contains("reach the inventory"));
+        }
+
     }
 
 

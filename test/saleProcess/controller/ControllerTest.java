@@ -3,9 +3,13 @@ package saleProcess.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import saleProcess.integration.ConnectionToDBFailedException;
+import saleProcess.integration.ItemDTO;
+import saleProcess.integration.ItemNotFoundException;
 import saleProcess.integration.SystemCreator;
 import saleProcess.model.Payment;
 
+import javax.naming.ContextNotEmptyException;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -46,18 +50,51 @@ class ControllerTest {
 
 
     @Test
-    void scanItem() {
+    void scanItem() throws ConnectionToDBFailedException, ItemNotFoundException{
         contr.initiateNewSale();
         int itemID = 22222;
         int nrOfitem = 3;
-        String receivedMsg= contr.scanItem(itemID, nrOfitem);
-
+        ItemDTO item= contr.scanItem(itemID, nrOfitem);
+        int retItemID=item.getItemID();
         String expectedMsg ="item salmon 3 x  price excluding VAT is: 125.0 is addedrunningtotal including VAT is now: 469.0";
-        assertEquals(expectedMsg,receivedMsg);
+        assertEquals(itemID,retItemID);
     }
 
     @Test
-    void endSaleSession() {
+    void scanNonExistingItem(){
+        ItemDTO item;
+        contr.initiateNewSale();
+        int wrongItemID = 2;
+        int nrOfitem = 3;
+        try{
+            item= contr.scanItem(wrongItemID, nrOfitem);
+
+            fail("amazing! an item that was not in the database was found, test failed");
+        }catch(ItemNotFoundException ne){
+
+            assertTrue(ne.getMessage().contains(wrongItemID+" was not found"));
+        }
+
+    }
+    @Test
+    void scanItemDBDown() throws ItemNotFoundException{
+        ItemDTO item;
+        contr.initiateNewSale();
+        int itemID = 10;
+        int nrOfitem = 3;
+        try{
+            item= contr.scanItem(itemID, nrOfitem);
+
+            fail("amazing! an item was found, even though we could not reach database to check test failed");
+        }catch (ConnectionToDBFailedException e) {
+            assertTrue(e.getMessage().contains("reach the inventory database"));
+        }
+
+    }
+
+
+    @Test
+    void endSaleSession() throws ItemNotFoundException{
         contr.initiateNewSale();
         int itemID = 22222;
         int nrOfitem = 3;
@@ -67,7 +104,7 @@ class ControllerTest {
     }
 
     @Test
-    void discountRequest() {
+    void discountRequest() throws ItemNotFoundException{
         contr.initiateNewSale();
         int itemID = 22222;
         int nrOfitem = 3;
@@ -83,7 +120,7 @@ class ControllerTest {
     }
 
     @Test
-    void pay() {
+    void pay()throws ItemNotFoundException {
         contr.initiateNewSale();
         int itemID = 22222;
         int nrOfitem = 3;
