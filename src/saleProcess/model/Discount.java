@@ -1,5 +1,6 @@
 package saleProcess.model;
 
+import saleProcess.integration.Discount.DiscountByID;
 import saleProcess.integration.Discount.DiscountHandler;
 import saleProcess.integration.Discount.DiscountRate;
 
@@ -18,6 +19,7 @@ public class Discount {
 		this.sale=sale;
 		this.customerID=customerID;
 		this.discountHandler=dischdlr;
+		discountHandler.setDiscountStrategy(new DiscountByID());
 		discountRequest();
 	}
 
@@ -26,7 +28,6 @@ public class Discount {
 		this.discountRate=discountHandler.discountRequest(customerID, sale.getItemsInSale());
 		this.theDiscountRateAsAPrimitiveValue=discountRate.getDiscountRate();
 	}
-
 
 
 }

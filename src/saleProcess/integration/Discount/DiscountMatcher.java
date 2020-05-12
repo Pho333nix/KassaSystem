@@ -6,5 +6,5 @@ import java.util.HashMap;
 
 public interface DiscountMatcher {
 
-    DiscountRate checkDiscount(int CustomerID, HashMap availableDiscounts, HashMap itemsToBeSold);
+    DiscountRate checkDiscount(int CustomerID, HashMap availableDiscountsByID, HashMap availableDiscountsByItems,HashMap itemsToBeSold);
 }
