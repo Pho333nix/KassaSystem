@@ -2,10 +2,10 @@ package saleProcess.model;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-import saleProcess.integration.DiscountHandler;
+import saleProcess.integration.Discount.DiscountHandler;
 import saleProcess.integration.ItemDTO;
 import saleProcess.integration.Printer;
-import saleProcess.integration.DiscountRate;
+import saleProcess.integration.Discount.DiscountRate;
 /**
  * An instance of this class represents a single sale, by a single customer,
  * paid with one payment at a specific moment in time.
@@ -55,7 +55,7 @@ public class Sale {
 	 * */
 	public void addItemToSale(ItemDTO item, int nrOfItem) {
 		if(itemsInSale.isEmpty()) {
-
+			System.out.println("add item to sale, empty: "+item.getItemName());
 			itemsInSale.put(item, nrOfItem);
 			updateRunningTotal(item, nrOfItem);
 
@@ -124,10 +124,10 @@ public class Sale {
 
 	private String messageAfterDiscount(double rate){
 		if(rate == 1.0){
-			return "You were not eligable for a discount";
+			return "Discount eligibility: False";
 		}else {
 			runningTotal =  getRunningTotal()-(getRunningTotal()* rate);
-			return "You were eligable for a discount rate of: " + rate
+			return "You were eligible for a discount rate of: " + rate
 					+ " your new total is now: " + runningTotal;
 		}
 

@@ -1,7 +1,7 @@
 package saleProcess.model;
 
 import org.junit.jupiter.api.Test;
-import saleProcess.integration.DiscountHandler;
+import saleProcess.integration.Discount.DiscountHandler;
 import saleProcess.integration.ItemDTO;
 import saleProcess.integration.Printer;
 

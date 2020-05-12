@@ -3,6 +3,7 @@ package saleProcess.integration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import saleProcess.integration.Discount.DiscountHandler;
 import saleProcess.model.Sale;
 
 import java.io.ByteArrayOutputStream;

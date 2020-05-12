@@ -5,7 +5,8 @@ import saleProcess.model.Receipt;
 public class Printer {
 
 	public void printReceipt(Receipt receipt) {
-		receipt.toString();
+		StringBuilder sr =receipt.getReceiptSR();
+		System.out.println(sr.toString());
 	}
 
 

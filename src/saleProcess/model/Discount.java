@@ -1,7 +1,7 @@
 package saleProcess.model;
 
-import saleProcess.integration.DiscountHandler;
-import saleProcess.integration.DiscountRate;
+import saleProcess.integration.Discount.DiscountHandler;
+import saleProcess.integration.Discount.DiscountRate;
 
 /**
  * This class is instantiated when a new discount is made.
@@ -23,7 +23,7 @@ public class Discount {
 
 	private void discountRequest(){
 
-		this.discountRate=discountHandler.discountRequest(customerID);
+		this.discountRate=discountHandler.discountRequest(customerID, sale.getItemsInSale());
 		this.theDiscountRateAsAPrimitiveValue=discountRate.getDiscountRate();
 	}
 

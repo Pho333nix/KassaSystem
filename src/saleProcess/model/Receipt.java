@@ -43,8 +43,9 @@ public class Receipt {
 
 	}
 
-	public String toString(){
-		return sr.toString();
+
+	public StringBuilder getReceiptSR(){
+		return sr;
 	}
 
 

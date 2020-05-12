@@ -1,4 +1,4 @@
-package saleProcess.integration;
+package saleProcess.integration.Discount;
 
 public class DiscountRate {
     private double rateOfDiscount;

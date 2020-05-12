@@ -7,10 +7,12 @@ import java.util.HashMap;
  * This class should contact an external inventory system to get information
  * about out items. since we do not have such a system we will create a
  * fictional database representing that external system. that's where our
- * items will be fetched from
+ * items will be fetched from. This class implements the singleton pattern, meaning
+ * there will only be one instance of this class from the moment the program starts.
+ * This is done to stop the creation of endless copies of this class when only one is needed.
  * */
 public class InventoryS{
-
+	private static final InventoryS INVENTORY_SINGLETON = 	new InventoryS();
 	private ItemDTO itemDTO;
 	private HashMap<Integer, Item> itemDB= new HashMap<Integer, Item>();
 	private HashMap<ItemDTO, Integer> mapOfBoughtItems = new HashMap<>();
@@ -24,6 +26,10 @@ public class InventoryS{
 		//create a fake database to fetch data from. perhabs a symboltable
 		// with dummy values?
 		fictionalDB();
+	}
+
+	public static InventoryS getInventorySingleton() {
+		return INVENTORY_SINGLETON;
 	}
 
 	/**
@@ -50,8 +56,7 @@ public class InventoryS{
 		if(itemID==dbCrasher){
 			throw new ConnectionToDBFailedException("The system failed in it's attempt to " +
 					"reach the inventory database");
-		} else
-			if(itemExists(itemID)){
+		} else if(itemExists(itemID)){
 			createItemDTO(itemID);
 			return itemDTO;
 		}else {

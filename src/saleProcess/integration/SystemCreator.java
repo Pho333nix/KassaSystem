@@ -1,5 +1,7 @@
 package saleProcess.integration;
 
+import saleProcess.integration.Discount.DiscountHandler;
+
 public class SystemCreator {
 
 	private  InventoryS  inv;
@@ -10,7 +12,7 @@ public class SystemCreator {
 	private DiscountHandler discountHdlr;
 
 	public  SystemCreator() {
-		inv = new InventoryS();
+		inv = InventoryS.getInventorySingleton();
 		extAcc = new ExternalAccountingS();
 		log = new SaleLog(extAcc, inv);
 		discountHdlr = new DiscountHandler();

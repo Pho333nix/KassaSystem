@@ -1,11 +1,10 @@
 package saleProcess.integration;
 
 import org.junit.jupiter.api.Test;
+import saleProcess.integration.Discount.DiscountHandler;
 import saleProcess.model.Payment;
 import saleProcess.model.Receipt;
 import saleProcess.model.Sale;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PrinterTest {
 

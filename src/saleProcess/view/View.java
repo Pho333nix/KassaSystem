@@ -4,7 +4,7 @@ import saleProcess.controller.Controller;
 import saleProcess.integration.ConnectionToDBFailedException;
 import saleProcess.integration.ItemDTO;
 import saleProcess.integration.ItemNotFoundException;
-import util.LogHandler;
+import saleProcess.util.LogHandler;
 
 /**
  * This class will serve as a palceholder for the real User Interface.
@@ -23,6 +23,8 @@ public class View {
 	 * */
 	public View(Controller contr) {
 		this.contr = contr;
+		contr.addPaymentObserver(new TotalRevenueView());
+
 	}
 	/**
 	 * This will initiate the simulation of a sale process. That is done by
@@ -45,10 +47,12 @@ public class View {
 			System.out.println("the item was not registered because of network connectivity problems, either on your end or the" +
 					"databases. check your network and please try again.");
 			logException(dbEx);
+		}catch (Exception e){
+			System.out.println("an unexpected exception: "+ e.getStackTrace());
+			logException(e);
 		}
 
-		/*responseMsg= contr.scanItem(11111, 1); //done
-		System.out.println(responseMsg); //done
+
 		runningTotal= contr.endSaleSession();
 		System.out.println("The running total is: " + runningTotal);
 		responseMsg= contr.discountRequest(1234567891);
@@ -56,7 +60,7 @@ public class View {
 		double change=contr.payAndLog(300);
 		System.out.println("customer is done and just payed 300:- and your change is: "+change);
 
-		 */
+
 	}
 	private void logException(Exception e){
 		logHdlr.logException(e);

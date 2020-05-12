@@ -1,10 +1,14 @@
 package saleProcess.controller;
 
-import saleProcess.controller.out.OperationFailedException;
 import saleProcess.integration.*;
+import saleProcess.integration.Discount.DiscountHandler;
+import saleProcess.model.PaymentObserver;
 import saleProcess.model.Payment;
 import saleProcess.model.Sale;
 import saleProcess.model.Register;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is our only controlloer. The purpose of this controller is to
@@ -28,6 +32,7 @@ public class Controller {
 	private Sale sale;
 	private ItemDTO itemDTO;
 	private Payment payment;
+	private List<PaymentObserver> paymentObserverList;
 
 
 	/**
@@ -45,6 +50,7 @@ public class Controller {
 		this.discountHandler=sysC.getDiscountHdlr();
 		pr = new Printer();
 		reg = new Register();
+		paymentObserverList = new ArrayList<>();
 	}
 	/**
 	 * This is what initiates a new sale. whenever a new customer
@@ -86,6 +92,7 @@ public class Controller {
 	 * @return the runningtotal, the totalprice so far. without the discount
 	 */
 	public double endSaleSession(){
+
 		return sale.getRunningTotal();
 	}
 
@@ -109,7 +116,7 @@ public class Controller {
 	 */
 	public double payAndLog(double amount) {
 		payment= sale.endSale(amount);
-
+		payment.addPaymentObservers(paymentObserverList);
 		reg.addPayment(payment);
 		logTheSale();
 		return payment.getChange();
@@ -122,6 +129,15 @@ public class Controller {
 	private void logTheSale(){
 		reg.addPayment(payment);
 		log.logSale(sale, sale.getItemsInSale());
+	}
+
+	/**
+	 * This method adds a TotalRevenueView observer object to the list
+	 * of observers in the controller.
+	 * @param PaymentObserver
+	 */
+	public void addPaymentObserver(PaymentObserver PaymentObserver){
+		paymentObserverList.add(PaymentObserver);
 	}
 
 }

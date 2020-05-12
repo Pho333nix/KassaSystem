@@ -4,10 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import saleProcess.integration.*;
+import saleProcess.integration.Discount.DiscountHandler;
 
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
