@@ -4,17 +4,15 @@ import java.util.HashMap;
 /**
  * This class creates a collection of different types of 
  * discounts. when a discount is requested, this is where we come
- * to verify if customer is eligable for the discount
+ * to verify if customer is eligible for the discount
  * */
 public class DiscountHandler {
-    private HashMap<Integer, DiscountRate> discountsByID = new HashMap<>();
-    private HashMap<Integer, DiscountRate> discountByItem = new HashMap<>();
-    private HashMap<Integer, DiscountRate> discountByItemQuantity;
-    public DiscountRate normalRate= new DiscountRate(1.0);
+
+
+    private DiscountRegister availableDiscounts;
     private DiscountMatcher discountStrategy;
     public DiscountHandler(){
-        availableDiscountsPerCustomer();
-        availableDiscountBasedOnItem();
+       availableDiscounts = new DiscountRegister();
     }
 
     /**
@@ -26,27 +24,16 @@ public class DiscountHandler {
      * 1.0
      */
     public DiscountRate discountRequest(int customerID, HashMap itemsInSale){
-      /*  if(discountsByID.containsKey(customerID)){
-            return discountsByID.get(customerID);
-        }
-        return normalRate;
-    */
+
        return checkEligibilityAndReturnRate(customerID,  itemsInSale);
     }
 
     private DiscountRate checkEligibilityAndReturnRate(int customerID, HashMap itemsInSale){
        //return  (discountsByID.containsKey(customerID) )? (discountsByID.get(customerID)):  normalRate;
-        return discountStrategy.checkDiscount(customerID, discountsByID, discountByItem, itemsInSale);
+        return discountStrategy.checkDiscount(customerID, availableDiscounts, itemsInSale);
 
     }
-    private void availableDiscountsPerCustomer(){
-        discountsByID.put(1234567891, new DiscountRate(0.25));
-    }
 
-    private void availableDiscountBasedOnItem(){
-        discountByItem.put(44444, new DiscountRate(0.15));
-
-    }
 
     /**
      * This method gives us the ability to set different types of discount strategies
@@ -55,10 +42,9 @@ public class DiscountHandler {
      * @param aDiscountStaregy any given discountStrategy that implements the discountMatcher interface
      */
     public void setDiscountStrategy(DiscountMatcher aDiscountStaregy){
+
         this.discountStrategy=aDiscountStaregy;
     }
-   /* private void availableDiscountsBasedOnItemQuantity(){
-        discountByItemQuantity.put()
-    } */
+
 
 }

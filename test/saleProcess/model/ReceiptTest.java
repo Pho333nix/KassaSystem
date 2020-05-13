@@ -15,15 +15,15 @@ Sale sale = new Sale(new DiscountHandler(), new Printer());
 
 
     @Test
-    void testToString() {
+    void testGetStringBuilder() {
         // int expectedQuantity = 10;
         sale.addItemToSale(apple, 7);
         sale.addItemToSale(apple, 3);
         Payment payment = sale.endSale(300);
         sale.endSale(1000);
         Receipt receipt = new Receipt(sale.getItemsInSale(), sale.getSaleTime(), payment, sale.getRunningTotal());
-        System.out.println(receipt.toString());
-        assertTrue(receipt.toString().contains("address"),
+        StringBuilder sr =receipt.getReceiptSR();
+        assertTrue(sr.toString().contains("address"),
                 "toString is not working :/");
     }
 }

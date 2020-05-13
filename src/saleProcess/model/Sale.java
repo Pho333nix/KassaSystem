@@ -127,8 +127,7 @@ public class Sale {
 			return "Discount eligibility: False";
 		}else {
 			runningTotal =  getRunningTotal()-(getRunningTotal()* rate);
-			return "You were eligible for a discount rate of: " + rate
-					+ " your new total is now: " + runningTotal;
+			return  rate + " your new total is now: " + runningTotal;
 		}
 
 	}

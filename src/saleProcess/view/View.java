@@ -33,35 +33,45 @@ public class View {
 	public void runASaleSimulation(){
 		double runningTotal;
 		contr.initiateNewSale();
-		int itemID=11111;
+		int itemID=1;
 		System.out.println("A sale has now begun");
+		tryScanItem(itemID);
+		runningTotal= contr.endSaleSession();
+		System.out.println("The running total is: " + runningTotal);
+		responseMsg= contr.discountRequest(1234567891);
+		System.out.println("customer made a discount request ");
+		if(responseMsg=="Discount eligibility: False"){
+			System.out.println("unfortunately you were not eligible for a discount ");
+		}else{
+			System.out.println("You are eligible for a discount rate of: "+responseMsg);
+		}
+		double change=contr.payAndLog(300);
+		System.out.println("customer is done and just payed 300:- and your change is: "+change);
+
+
+	}
+	private void tryScanItem(int itemID){
 		try {
 			ItemDTO item = contr.scanItem(itemID, 4);
 
 			System.out.println(item.getItemName() + " was added to sale");
 			System.out.println(contr.scanItem(itemID, 1).getItemName() + " was added to sale");
 		}catch (ItemNotFoundException ne){
-			System.out.println(ne);
+			System.out.println(ne + " please try again");
 			logException(ne);
+			tryScanItem(10);
+
 		}catch (ConnectionToDBFailedException dbEx){
 			System.out.println("the item was not registered because of network connectivity problems, either on your end or the" +
 					"databases. check your network and please try again.");
 			logException(dbEx);
+			tryScanItem(11111);
 		}catch (Exception e){
 			System.out.println("an unexpected exception: "+ e.getStackTrace());
 			logException(e);
 		}
 
-
-		runningTotal= contr.endSaleSession();
-		System.out.println("The running total is: " + runningTotal);
-		responseMsg= contr.discountRequest(1234567891);
-		System.out.println("customer made a discount request " + responseMsg );
-		double change=contr.payAndLog(300);
-		System.out.println("customer is done and just payed 300:- and your change is: "+change);
-
-
-	}
+	};
 	private void logException(Exception e){
 		logHdlr.logException(e);
 	}

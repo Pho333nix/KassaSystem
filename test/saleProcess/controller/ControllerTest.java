@@ -112,7 +112,7 @@ class ControllerTest {
         double runningTotal=Math.round(375*1.25);
         double newPrice = runningTotal-(runningTotal*rate);
 
-        String expectedMsg= "You were eligable for a discount rate of: " + rate
+        String expectedMsg=rate
                 + " your new total is now: " + newPrice;
         contr.scanItem(itemID, nrOfitem);
         String returnedMSG = contr.discountRequest(1234567891);

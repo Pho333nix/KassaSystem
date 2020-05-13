@@ -16,20 +16,26 @@ public class  DiscountByID implements DiscountMatcher {
     /**
      * A method that given some parameters checks if a customer is eligible for a discount by
      * their customer ID. If not another strategy is called that checks for another type of discount
-     * @param CustomerID is the parameter needed here, check for discount rates specific for this customer
+     * @param customerID is the parameter needed here, check for discount rates specific for this customer
      * @param itemsToBeSold is a parameter another strategy will need
-     * @param  availableDiscountsByID all the available discounrates based on items
-     * @param availableDiscountsByItems all the available discounrates based on items
+     * @param  availableDiscounts all the available discounts of any type.
      * @return a rate that will be applied on the total price.
      */
     @Override
-    public DiscountRate checkDiscount(int CustomerID, HashMap availableDiscountsByID, HashMap availableDiscountsByItems, HashMap itemsToBeSold) {
+    public DiscountRate checkDiscount(int customerID, DiscountRegister availableDiscounts, HashMap itemsToBeSold) {
 
-        return checkIfIdExistsAndReturnRate(CustomerID,   availableDiscountsByID, availableDiscountsByItems, itemsToBeSold);
+        if(availableDiscounts.discountsByID.containsKey(customerID)){
+            returnRate= (DiscountRate) availableDiscounts.discountsByID.get(customerID);
+        }else{
+            returnRate = new DiscountByItmes().checkDiscount(customerID, availableDiscounts,itemsToBeSold );
+        }
+        return returnRate;
     }
 
 
-    private DiscountRate checkIfIdExistsAndReturnRate(int customerID, HashMap availableDiscountsyID,HashMap availableDiscountsByItems, HashMap itemsToBeSold){
+
+
+   /* private DiscountRate checkIfIdExistsAndReturnRate(int customerID, HashMap availableDiscountsyID,HashMap availableDiscountsByItems, HashMap itemsToBeSold){
         //return (availableDiscountsyID.containsKey(customerID) )? (availableDiscountsyID.get(customerID)):  normalRate;
         if(availableDiscountsyID.containsKey(customerID)){
             returnRate= (DiscountRate) availableDiscountsyID.get(customerID);
@@ -38,6 +44,8 @@ public class  DiscountByID implements DiscountMatcher {
         }
         return returnRate;
     }
+
+    */
 
 
 }
